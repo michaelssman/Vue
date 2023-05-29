@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.11/vue.global.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    //单项数据流保证了组件的独立性 降低耦合程度
+    /*
+    父组件定义一个方法，子组件也定义一个方法，父组件中 子组件调父组件方法
+    */
+    const app = Vue.createApp({
+        data(){
+            return {
+                counter:0
+            }
+        },
+        methods:{
+            handleAddCounter(param){
+                console.log(param)
+                this.counter+=param
+            },
+            //子组件把最后结果传给父组件
+            handleAddCounter3(param){
+                console.log(param)
+                this.counter=param
+            }
+        },
+        template:`
+            <h2>jspang</h2>
+            <counter :counter="counter" />
+            <counter :counter="counter" @add="handleAddCounter" />
+            <counter :counter="counter" @add3="handleAddCounter3" />
+        `
+    })
+    //写一个计数器组件
+    app.component('Counter',{
+        props:['counter'],
+
+        //声明
+        emits:['add','add3'],//因为下面使用了add 所以先声明一下
+
+        //校验
+        // emits:{
+        //     add:(value)=>{
+        //         return value < 20 ? true:false;
+        //     }, 
+        //     add3:(value)=>{
+        //         return value < 20 ? true:false;
+        //     }  
+        // },
+        methods:{
+            handleClick(){
+                this.$emit('add',2)
+            }, 
+            handleClick3(){
+                this.$emit('add3',this.counter+3)
+            }
+        },
+        template:`
+            {{counter}}<button @click="handleClick">增加数量</button>
+            {{counter}}<button @click="handleClick3">增加数量</button>
+        `
+    })
+    const vm = app.mount("#app")
+
+    //总结
+    /*
+    1.子组件调用父组件事件/方法的编写
+    2.子组件向父组件传递参数
+    3.传递参数时，如何进行校验
+    */
+</script>
+</html>

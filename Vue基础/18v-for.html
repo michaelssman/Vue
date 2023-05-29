@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    const app=Vue.createApp({ 
+        data(){
+            return {
+                listArray:['谢大脚','刘英','小红'],
+                listObject:{
+                    GirlOne:'谢大脚1',
+                    GirlTwo:'刘英1',
+                    GirlThree:'小红1',
+                }
+            }
+        },
+        methods:{
+            handleChangeBtnClick(){
+                this.listArray.push('jspang.com')
+            }
+        },
+        template:`
+        <ul>
+            <template v-for="(item,index) in listArray"
+                    :key="index+item">
+                <li v-if="item != '谢大脚'">
+                [{{index}}]{{item}}
+                </li>
+            </template>
+        </ul>
+        <button @click="handleChangeBtnClick">点击改变</button>
+
+        <ul>
+            <li 
+                v-for="(value,key,index) in listObject"
+                :key="key"
+            >
+                [{{index}}]{{key}}:{{value}}
+            </li>
+        </ul>
+
+        <span v-for="count in 99">{{count}} |</span>
+        `
+    })
+    const vm = app.mount("#app")
+</script>
+</html>

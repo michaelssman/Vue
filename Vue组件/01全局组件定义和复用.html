@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.11/vue.global.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    const app = Vue.createApp({
+        template:`
+            <website/>
+            <describe/>
+            <count/>
+            <count/>
+            <count/>
+        `
+    })
+    //<--全局组件 处处可以使用 页面打开就加载 使用的时候不用声明!-->
+    app.component('website',{
+        template:`
+            <h2>JSPang.com</h2>
+        `
+    })
+    app.component('describe',{
+        template:`
+            <div>技术胖的boke</div>
+        `
+    })
+    app.component('count',{
+        data(){
+            return {
+                count:0
+            }
+        },
+        template:`
+            <div>
+                {{count}}
+                <button @click="count++">增加1</button>
+            </div>
+        `
+    })
+    const vm = app.mount("#app")
+    //只要定义，处处可以使用，性能不高，但是使用起来很方便
+</script>
+</html>

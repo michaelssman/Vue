@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.11/vue.global.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    //支持String Boolean Array Object Function Symbol这些类型
+    const app = Vue.createApp({
+        data(){
+            return {
+                name:'JSPang 123',
+                pay:()=>{
+                    alert('给你500源')
+                }
+            }
+        },
+        template:`
+            <h2>jspang</h2>
+            <son name="技术波" />            <!-- 静态传值 只能传字符串类型 -->
+            <son v-bind:name="name" />      <!-- 动态传值 -->
+            <son1 :name="name" />      
+        `
+    })
+    //父组件向自组件传值 通过属性方式
+    //参数1:自组件名字 参数2:配置
+    app.component('Son',{
+        //自组件接收 用props
+        props:{
+            name:{
+                //类型判断
+                type:String,
+                //是否必传判断
+                required:true
+            }
+        },
+        template:`<div>{{name}} div</div>`
+    })
+    app.component('Son1',{
+        //自组件接收 用props
+        props:{
+            name:{
+                //类型
+                type:String,
+                //精准校验
+                validator:function(value){
+                    //业务逻辑判断
+                    return value.search("JSPang") != -1
+                },
+                //默认值
+                default:'jspang.com'
+            }
+        },
+        template:`<div>{{name}} div</div>`
+    })
+    const vm = app.mount("#app")
+</script>
+</html>

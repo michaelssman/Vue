@@ -1,0 +1,63 @@
+//监听data中的值的变化，变化后可以写一些方法 处理逻辑
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    const app=Vue.createApp({ 
+        data(){
+            return{
+                message:'bilibili',
+                price:10,
+                count:2,
+                newTotal:20
+            }
+        },
+        //监听器，一般写在计算属性上面
+        //监听器和计算属性都能监听data中数据的变化 
+        //页面渲染的时候计算属性也会执行一遍 而监听器第一次不执行
+        //计算属性一定返回一个值，监听器是执行业务逻辑
+        watch:{
+            count(current,prev){
+                console.log('count changed')
+                console.log('现在的值：',current)
+                console.log('以前的值：',prev)
+                this.newTotal = this.price * this.count
+            }
+        },
+        //计算属性 在methods上
+        //计算属性的特性，当计算属性依赖的内容发生改变时，才会重新执行计算
+        computed:{
+            total(){
+                return this.price * this.count
+            }
+        },
+        methods:{
+            handleItemClick(){
+                this.message = this.message=='jspang'?'技术胖':'jspang'
+            },
+            //只要页面重新渲染，就会重新执行方法
+            getTotal() { 
+                return this.price * this.count;
+            },
+            addCount(){
+                this.count++
+            }
+        },
+        template:`
+        <h2>{{message}}</h2>
+        <h2>总和：{{total}}</h2>
+        <h2>总和：{{getTotal()}}</h2>
+        <button @click="addCount">再买一个</button>
+        `
+    })
+    const vm = app.mount("#app")
+</script>
+</html>

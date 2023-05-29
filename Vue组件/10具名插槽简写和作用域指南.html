@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.11/vue.global.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    const app = Vue.createApp({
+        template:`
+            <h2>欢迎光临红浪漫-请选择您的技术</h2>
+            <hong-lang-man>
+                <template #one><div>1.男宾以为，请上二楼</div></template>
+                <template #two><div>3.你点了198元泰式按摩</div></template>
+            </hong-lang-man>
+            
+            <list v-slot="props">
+                <span>{{props.item}}</span>
+            </list>
+
+            <list v-slot="{item}">
+                <div>{{item}}</div>
+            </list>
+        `
+    })
+    app.component('List',{
+        data(){
+            return{
+                list:['大脚','刘英','小红']
+            }
+        },
+        template:`
+            <div>
+                <slot v-for="item in list" :item="item"/>
+            </div>
+        `
+    })
+
+
+
+
+
+    app.component('HongLangMan',{
+        template:`
+            <div>
+                <slot name="one"></slot>
+                <div>2.你选择了大脚为你服务</div>
+                <slot name="two"></slot>
+            </div>
+        `
+    })
+    const vm = app.mount("#app")
+</script>
+</html>

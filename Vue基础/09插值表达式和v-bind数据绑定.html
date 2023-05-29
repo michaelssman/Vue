@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="app"></div>
+</body>
+<script>
+    //Vue生命周期函数   在某一时刻  会  自动执行 的函数
+    const app=Vue.createApp({ 
+        data(){
+            return{
+                message:'<i>jspang</i>',
+                count:5
+            }
+        },
+        methods:{
+            handleItemClick(){
+                this.message = this.message=='jspang'?'技术胖':'jspang'
+            }
+        },
+        template:`
+        <h2 v-bind:title="message">{{message}}</h2>
+        <h2>{{count>2?'大':'小'}}</h2>
+        <h2>{{1+2}}</h2>
+        <h2>{{'jsl'+'fhds'}}</h2>
+        
+        `
+        // template:`<h2 
+        //             v-on:click='handleItemClick'
+        //             v-html="message"
+        //             v-once
+        //         ></h2>`
+    })
+    const vm = app.mount("#app")
+    // app.unmounted;
+</script>
+</html>
